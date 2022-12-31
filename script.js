@@ -34,6 +34,7 @@ drone.on('open', error => {
       onError(error);
     }
   });
+  room.on('history_message', message => console.log(message));
   // We're connected to the room and received an array of 'members'
   // connected to the room (including us). Signaling server is ready.
   room.on('members', members => {
@@ -51,8 +52,6 @@ function sendMessage(message) {
     message
   });
 }
-
-room.on('history_message', message => console.log(message));
 
 function startWebRTC(isOfferer) {
   pc = new RTCPeerConnection(configuration);
