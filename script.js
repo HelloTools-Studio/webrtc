@@ -26,7 +26,9 @@ drone.on('open', error => {
   if (error) {
     return console.error(error);
   }
-  room = drone.subscribe(roomName);
+  room = drone.subscribe(roomName, {
+  historyCount: 15 // ask for the 5 most recent messages from the room's history
+  });
   room.on('open', error => {
     if (error) {
       onError(error);
@@ -49,6 +51,8 @@ function sendMessage(message) {
     message
   });
 }
+
+room.on('history_message', message => console.log(message));
 
 function startWebRTC(isOfferer) {
   pc = new RTCPeerConnection(configuration);
